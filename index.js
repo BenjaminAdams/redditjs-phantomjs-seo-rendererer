@@ -42,50 +42,39 @@ server.get('/*', function(req, res) {
 http.createServer(server).listen(port);
 
 //getSource("/r/worldnews/comments/27yg8m/australian_government_grabs_360_million_from_idle/", function(data) {
-//  console.log('got data', data)
+//console.log('got data', data)
 //})
-
-// phantom.create(function (ph) {
-//   ph.createPage(function (page) {
-//     page.open("https://redditjs.com/r/worldnews/comments/27yg8m/australian_government_grabs_360_million_from_idle/", function (status) {
-//       console.log("opened google? ", status);
-//       page.evaluate(function () { return document.title; }, function (result) {
-//         console.log('Page title is ' + result);
-//         ph.exit();
-//       });
-//     });
-//   });
-// });
 
 function getSource(url, cb) {
   url = url.replace('//', '/')
   url = rtrim(url, '/')
 
-  phantom.create("--web-security=false", "--ignore-ssl-errors=true", "--load-images=false", '--ssl-protocol=tlsv1', function(ph) {
+  phantom.create("--web-security=false", "--ignore-ssl-errors=true", "--load-images=false", '--ssl-protocol=any', function(ph) {
 
     ph.createPage(function(page) {
       //console.log(page)
 
       page.set('onResourceError', function(resourceError) {
         console.log('ERROR:', resourceError)
-        page.reason = resourceError.errorString;
-        page.reason_url = resourceError.url;
       })
 
       console.log(rootUrl + url + '?reqAsBot')
       page.open(rootUrl + url + '?reqAsBot', function(status) {
         console.log("opened page= ", status);
 
-        setTimeout(function() {
-          page.evaluate(function() {
-            return document.all[0].innerHTML;
+        if (status === 'fail') {
+          return cb('failed to load url:' + url)
+        }
 
-          }, function(data) {
-            //console.log(data);
-            cb(data)
-            ph.exit();
-          });
-        }, 400)
+        // setTimeout(function() {
+        page.evaluate(function() {
+          return document.all[0].innerHTML;
+
+        }, function(data) {
+          cb(data)
+          ph.exit();
+        });
+        // }, 400)
 
       });
 
