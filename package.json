@@ -1,11 +1,11 @@
 {
-  "name": "casperjs-spider",
+  "name": "redditjs-seo-renderer",
   "version": "0.6.1",
-  "description": "Use CasperJS to crawl sites and report issues.",
+  "description": "Use Phantomjs to render the content of redditJS",
   "main": "./index",
   "engines": {
     "node": "0.10.26",
-    "npm": "1.4.3"
+    "npm": "2.1.x"
   },
   "dependencies": {
     "body-parser": "^1.0.0",
@@ -13,8 +13,8 @@
     "express": "4.0.x",
     "fs": "0.0.1",
     "method-override": "^1.0.0",
-    "phantom": "^0.6.3",
-    "phantomjs": "^1.9.7-8",
+    "phantom": "^0.8.4",
+    "phantomjs": "^1.9.19",
     "request": "^2.39.0",
     "static-favicon": "^1.0.0",
     "util": "^0.10.3"
