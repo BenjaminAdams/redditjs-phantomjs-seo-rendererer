@@ -1,0 +1,79 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', 'install', 'fs', '--save' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.37
+4 verbose node symlink /usr/bin/node
+5 warn package.json redditjs-seo-renderer@0.6.1 No README data
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'fs@0.0.1', null ]
+8 verbose cache add name=undefined spec="fs@0.0.1" args=["fs@0.0.1",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'fs@0.0.1',
+9 verbose parsed url   path: 'fs@0.0.1',
+9 verbose parsed url   href: 'fs@0.0.1' }
+10 verbose cache add name="fs" spec="0.0.1" args=["fs","0.0.1"]
+11 verbose parsed url { protocol: null,
+11 verbose parsed url   slashes: null,
+11 verbose parsed url   auth: null,
+11 verbose parsed url   host: null,
+11 verbose parsed url   port: null,
+11 verbose parsed url   hostname: null,
+11 verbose parsed url   hash: null,
+11 verbose parsed url   search: null,
+11 verbose parsed url   query: null,
+11 verbose parsed url   pathname: '0.0.1',
+11 verbose parsed url   path: '0.0.1',
+11 verbose parsed url   href: '0.0.1' }
+12 verbose addNamed [ 'fs', '0.0.1' ]
+13 verbose addNamed [ '0.0.1', '0.0.1' ]
+14 silly lockFile e62b818f-fs-0-0-1 fs@0.0.1
+15 verbose lock fs@0.0.1 /home/ben/.npm/e62b818f-fs-0-0-1.lock
+16 verbose request where is /fs
+17 verbose request registry https://registry.npmjs.org/
+18 verbose request id 6d3a5b419d49e823
+19 verbose url raw /fs
+20 verbose url resolving [ 'https://registry.npmjs.org/', './fs' ]
+21 verbose url resolved https://registry.npmjs.org/fs
+22 verbose request where is https://registry.npmjs.org/fs
+23 info trying registry request attempt 1 at 17:40:11
+24 http GET https://registry.npmjs.org/fs
+25 http 200 https://registry.npmjs.org/fs
+26 silly registry.get cb [ 200,
+26 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+26 silly registry.get     etag: '"61EZFCRGHS23ZM86028I5BXGD"',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     'cache-control': 'max-age=60',
+26 silly registry.get     'content-length': '1643',
+26 silly registry.get     'accept-ranges': 'bytes',
+26 silly registry.get     date: 'Sun, 06 Dec 2015 23:40:12 GMT',
+26 silly registry.get     via: '1.1 varnish',
+26 silly registry.get     age: '0',
+26 silly registry.get     connection: 'keep-alive',
+26 silly registry.get     'x-served-by': 'cache-ord1735-ORD',
+26 silly registry.get     'x-cache': 'HIT',
+26 silly registry.get     'x-cache-hits': '1',
+26 silly registry.get     'x-timer': 'S1449445211.946281,VS0,VE253',
+26 silly registry.get     vary: 'Accept' } ]
+27 silly lockFile e62b818f-fs-0-0-1 fs@0.0.1
+28 silly lockFile e62b818f-fs-0-0-1 fs@0.0.1
+29 error Error: version not found: fs@0.0.1
+29 error     at /usr/lib/node_modules/npm/lib/cache/add-named.js:125:12
+29 error     at saved (/usr/lib/node_modules/npm/node_modules/npm-registry-client/lib/get.js:167:7)
+29 error     at Object.oncomplete (fs.js:108:15)
+30 error If you need help, you may report this *entire* log,
+30 error including the npm and node versions, at:
+30 error     <http://github.com/npm/npm/issues>
+31 error System Linux 3.13.0-43-generic
+32 error command "/usr/bin/node" "/usr/bin/npm" "install" "fs" "--save"
+33 error cwd /home/ben/code/redditjs-phantomjs-seo-rendererer
+34 error node -v v0.10.37
+35 error npm -v 1.4.28
+36 verbose exit [ 1, true ]
