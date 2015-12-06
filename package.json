@@ -1,0 +1,33 @@
+{
+  "name": "casperjs-spider",
+  "version": "0.6.1",
+  "description": "Use CasperJS to crawl sites and report issues.",
+  "main": "./index",
+  "engines": {
+    "node": "0.10.26",
+    "npm": "1.4.3"
+  },
+  "dependencies": {
+    "body-parser": "^1.0.0",
+    "compression": "^1.0.1",
+    "express": "4.0.x",
+    "fs": "0.0.1",
+    "method-override": "^1.0.0",
+    "phantom": "^0.6.3",
+    "phantomjs": "^1.9.7-8",
+    "request": "^2.39.0",
+    "static-favicon": "^1.0.0",
+    "util": "^0.10.3"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/seethroughtrees/casperjs-spider.git"
+  },
+  "author": "seethroughtrees",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seethroughtrees/casperjs-spider/issues"
+  },
+  "homepage": "https://github.com/seethroughtrees/casperjs-spider"
+}
