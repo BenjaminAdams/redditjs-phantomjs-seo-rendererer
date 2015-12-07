@@ -53,7 +53,7 @@ function getSource(url, cb) {
 
   var attempts = 0;
 
-  var fullUrl = rootUrl + url + '?reqAsBot=1'
+  var fullUrl = rootUrl + url + '?reqAsBot'
 
   phantom.create("--web-security=false", "--ignore-ssl-errors=true", "--load-images=false", '--ssl-protocol=any', '--disk-cache=true', function(ph) {
 
