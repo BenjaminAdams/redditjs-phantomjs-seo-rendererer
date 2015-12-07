@@ -8,15 +8,10 @@
     "npm": "3.3.x"
   },
   "dependencies": {
-    "body-parser": "^1.0.0",
-    "compression": "^1.0.1",
-    "express": "4.0.x",
-    "method-override": "^1.0.0",
+
+    "express": "^4.0.0",
     "phantom": "^0.8.4",
-    "phantomjs": "^1.9.19",
-    "request": "^2.39.0",
-    "static-favicon": "^1.0.0",
-    "util": "^0.10.3"
+    "request": "^2.39.0"
   },
   "devDependencies": {},
   "repository": {

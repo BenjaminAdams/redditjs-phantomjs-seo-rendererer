@@ -1,17 +1,11 @@
 var phantom = require('phantom');
-
 var express = require("express")
 var http = require("http")
 var port = process.env.PORT || 8005
 var server = module.exports = express();
-var fs = require("fs");
 var request = require('request')
-  //var $ = require('jquery')
 
 var rootUrl = 'https://redditjs.com'
-
-var bodyParser = require('body-parser')
-var methodOverride = require('method-override')
 
 server.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -22,19 +16,22 @@ server.use(function(req, res, next) {
 });
 server.enable('trust proxy');
 
-//server.use(logger());
-server.use(bodyParser());
-server.use(methodOverride());
-
 server.get('/api/*', function(req, res) {
 
   getNonAuth(req, res)
 });
 
+server.get('/css/*', redirectStaticFile);
+server.get('/js/*', redirectStaticFile);
+server.get('/img/*', redirectStaticFile);
+server.get('/favicon.ico', redirectStaticFile);
+
 server.get('/*', function(req, res) {
+  //console.log(req.path)
 
   getSource(req.path, function(data) {
-    res.send(200, data);
+
+    res.status(200).send(data);
 
   })
 });
@@ -45,13 +42,17 @@ http.createServer(server).listen(port);
 //console.log('got data', data)
 //})
 
+function redirectStaticFile(req, res) {
+  res.redirect(rootUrl + req.path)
+}
+
 function getSource(url, cb) {
   url = url.replace('//', '/')
   url = rtrim(url, '/')
 
   var fullUrl = rootUrl + url + '?reqAsBot'
 
-  phantom.create("--web-security=false", "--ignore-ssl-errors=true", "--load-images=false", '--ssl-protocol=any', function(ph) {
+  phantom.create("--web-security=false", "--ignore-ssl-errors=true", "--load-images=false", '--ssl-protocol=any', '--disk-cache=true', function(ph) {
 
     ph.createPage(function(page) {
       //console.log(page)
@@ -60,9 +61,9 @@ function getSource(url, cb) {
       //   console.log('ERROR:', resourceError)
       // })
 
-      console.log(fullUrl)
+      console.log('loading: ', fullUrl)
       page.open(fullUrl, function(status) {
-        console.log("opened page= ", status);
+        //console.log("opened page= ", status);
 
         if (status === 'fail') {
           cb('failed to load url:' + url)
@@ -75,7 +76,7 @@ function getSource(url, cb) {
               cb(data)
               ph.exit();
             });
-          }, 1000)
+          }, 1500)
         }
 
       });
