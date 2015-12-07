@@ -66,15 +66,15 @@ function getSource(url, cb) {
           return cb('failed to load url:' + url)
         }
 
-        // setTimeout(function() {
-        page.evaluate(function() {
-          return document.all[0].innerHTML;
+        setTimeout(function() {
+          page.evaluate(function() {
+            return document.all[0].innerHTML;
 
-        }, function(data) {
-          cb(data)
-          ph.exit();
-        });
-        // }, 400)
+          }, function(data) {
+            cb(data)
+            ph.exit();
+          });
+        }, 400)
 
       });
 
