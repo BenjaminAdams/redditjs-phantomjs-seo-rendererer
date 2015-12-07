@@ -21,7 +21,7 @@ server.get('/api/*', function(req, res) {
 });
 
 server.get('/css/*', redirectStaticFile);
-server.get('/js/*', redirectStaticFile);
+server.get('/js/*', sendBlank);
 server.get('/img/*', redirectStaticFile);
 server.get('/fonts/*', sendBlank);
 server.get('/favicon.ico', redirectStaticFile);
