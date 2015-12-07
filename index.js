@@ -53,13 +53,11 @@ function getSource(url, cb) {
 
   var attempts = 0;
 
-  // var fullUrl = rootUrl + url + '?reqAsBot'
   var fullUrl = rootUrl + url
 
   phantom.create("--web-security=false", "--ignore-ssl-errors=true", "--load-images=false", '--ssl-protocol=any', '--disk-cache=true', function(ph) {
 
     ph.createPage(function(page) {
-      //console.log(page)
 
       // page.set('onResourceError', function(resourceError) {
       //   console.log('ERROR:', resourceError)
@@ -87,21 +85,19 @@ function getSource(url, cb) {
 
 function isItLoaded(data) {
 
-  // if (data.contains('<div id="loadingC" style="display: block; "><img class="loadingMOAR" src="img/loading.gif"></div>') || data.contains('<div class="nextprev btmCenter" style="display: block; "><img class="loadingMOAR" src="img/loading.gif"></div>') || data.contains('<img class="loadingSingle" src="img/loading.gif">')) {
-
   $ = cheerio.load(data);
   var minContentLength = 100
   var srLength = $('#siteTableContainer').text().length
   var thepostLength = $('.singlePagePost').text().length
 
   if ($('#siteTableContainer').length && srLength < minContentLength) {
-    console.log('still loading ', data.length)
+    // console.log('still loading ', srLength)
     return false
   } else if ($('.singlePagePost').length && thepostLength < minContentLength) {
-    console.log('still loading ', data.length)
+    //  console.log('still loading ', thepostLength)
     return false
   } else {
-    console.log('DONE ', data.length)
+    //  console.log('DONE ', data.length)
     return true
   }
 
@@ -116,6 +112,7 @@ function evaluatePage(page, attempts, ph, cb) {
     }, function(data) {
 
       if (isItLoaded(data) === true || attempts > 10) {
+        data = cleanHtml(data)
         cb(data)
         ph.exit();
       } else {
@@ -126,23 +123,19 @@ function evaluatePage(page, attempts, ph, cb) {
   }, 250);
 }
 
+function cleanHtml(data) {
+  data = data.replace('/js/app/init/main.min.js', 'https://example.com/x.js')
+  data = data.replace('/js/app/config/config.js', 'https://example.com/x.js')
+  return data
+
+}
+
 function getNonAuth(req, res) {
   console.log('path before', req.path)
   var path = req.path
     //path = path.replace('//api', '/api')
     //path = path.replace('//api/', '')
   path = path.replace('api/', '')
-
-  console.log('path=', path)
-
-  // var url_parts = url.parse(req.url, true);
-  // var urlStr = url_parts.query.url
-  // var cookie = url_parts.query.cookie
-  // var queryParams = url_parts.path.replace('/api/?url=', '');
-  // queryParams = queryParams.replace(urlStr, '')
-
-  // delete queryParams.url;
-  // queryParams = this.ltrim(queryParams, '&');
 
   var urlStr = 'http://api.reddit.com/' + path
 
