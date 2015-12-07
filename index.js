@@ -54,9 +54,9 @@ function getSource(url, cb) {
     ph.createPage(function(page) {
       //console.log(page)
 
-      page.set('onResourceError', function(resourceError) {
-        console.log('ERROR:', resourceError)
-      })
+      // page.set('onResourceError', function(resourceError) {
+      //   console.log('ERROR:', resourceError)
+      // })
 
       console.log(rootUrl + url + '?reqAsBot')
       page.open(rootUrl + url + '?reqAsBot', function(status) {
