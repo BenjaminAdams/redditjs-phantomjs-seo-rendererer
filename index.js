@@ -84,7 +84,9 @@ function getSource(url, cb) {
 }
 
 function isItLoaded(data) {
-
+  if (data.contains('jsonp=jQuery')) {
+    return false
+  }
   $ = cheerio.load(data);
   var minContentLength = 100
   var srLength = $('#siteTableContainer').text().length
