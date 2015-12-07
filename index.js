@@ -67,6 +67,7 @@ function getSource(url, cb) {
 
         if (status === 'fail') {
           cb('failed to load url:' + url)
+          ph.exit();
         } else {
           setTimeout(function() {
             page.evaluate(function() {
@@ -109,7 +110,7 @@ function getNonAuth(req, res) {
   // delete queryParams.url;
   // queryParams = this.ltrim(queryParams, '&');
 
-  urlStr = 'http://api.reddit.com/' + path
+  var urlStr = 'http://api.reddit.com/' + path
 
   var options = {
     url: urlStr
