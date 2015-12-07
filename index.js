@@ -124,8 +124,7 @@ function evaluatePage(page, attempts, ph, cb) {
 }
 
 function cleanHtml(data) {
-  data = data.replace('/js/app/init/main.min.js', 'https://example.com/x.js')
-  data = data.replace('/js/app/config/config.js', 'https://example.com/x.js')
+  data = data.replace('/js/app/init/main.min.js', '/js/app/config/config.js')
   return data
 
 }
