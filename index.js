@@ -22,7 +22,10 @@ server.get('/api/*', function(req, res) {
 });
 
 server.get('/css/*', redirectStaticFile);
-server.get('/js/*', redirectStaticFile);
+//server.get('/js/*', redirectStaticFile);
+server.get('/js/*', function(req, res) {
+  res.status(200).send('')
+});
 server.get('/img/*', redirectStaticFile);
 server.get('/favicon.ico', redirectStaticFile);
 
