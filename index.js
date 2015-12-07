@@ -111,7 +111,7 @@ function evaluatePage(page, attempts, ph, cb) {
       return document.all[0].innerHTML;
     }, function(data) {
 
-      if (isItLoaded(data) === true || attempts > 10) {
+      if (isItLoaded(data) === true || attempts > 20) {
         data = cleanHtml(data)
         cb(data)
         ph.exit();
