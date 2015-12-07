@@ -113,7 +113,7 @@ function evaluatePage(page, attempts, ph, cb) {
       return document.all[0].innerHTML;
     }, function(data) {
 
-      if (isItLoaded(data) === true || attempts > 30) {
+      if (isItLoaded(data) === true || attempts > 20) {
         data = cleanHtml(data)
         cb(data)
         ph.exit();
@@ -122,7 +122,7 @@ function evaluatePage(page, attempts, ph, cb) {
       }
 
     });
-  }, 250);
+  }, 500);
 }
 
 function cleanHtml(data) {
