@@ -4,6 +4,7 @@ var http = require("http")
 var port = process.env.PORT || 8005
 var server = module.exports = express();
 var request = require('request')
+var cheerio = require('cheerio')
 
 var rootUrl = 'https://redditjs.com'
 
@@ -21,7 +22,7 @@ server.get('/api/*', function(req, res) {
 });
 
 server.get('/css/*', redirectStaticFile);
-server.get('/js/*', redirectStaticFile);
+server.get('/js/*', sendBlank);
 server.get('/img/*', redirectStaticFile);
 server.get('/fonts/*', sendBlank);
 server.get('/favicon.ico', redirectStaticFile);
@@ -50,6 +51,8 @@ function getSource(url, cb) {
   url = url.replace('//', '/')
   url = rtrim(url, '/')
 
+  var attempts = 0;
+
   // var fullUrl = rootUrl + url + '?reqAsBot'
   var fullUrl = rootUrl + url
 
@@ -70,15 +73,9 @@ function getSource(url, cb) {
           cb('failed to load url:' + url)
           ph.exit();
         } else {
-          setTimeout(function() {
-            page.evaluate(function() {
-              return document.all[0].innerHTML;
 
-            }, function(data) {
-              cb(data)
-              ph.exit();
-            });
-          }, 2400)
+          evaluatePage(page, attempts, ph, cb)
+
         }
 
       });
@@ -88,9 +85,45 @@ function getSource(url, cb) {
   });
 }
 
-function changeHtml(html) {
+function isItLoaded(data) {
 
-  return html
+  // if (data.contains('<div id="loadingC" style="display: block; "><img class="loadingMOAR" src="img/loading.gif"></div>') || data.contains('<div class="nextprev btmCenter" style="display: block; "><img class="loadingMOAR" src="img/loading.gif"></div>') || data.contains('<img class="loadingSingle" src="img/loading.gif">')) {
+
+  $ = cheerio.load(data);
+  var minContentLength = 100
+  var srLength = $('#siteTableContainer').text().length
+  var thepostLength = $('.singlePagePost').text().length
+
+  if ($('#siteTableContainer').length && srLength < minContentLength) {
+    console.log('still loading ', data.length)
+    return false
+  } else if ($('.singlePagePost').length && thepostLength < minContentLength) {
+    console.log('still loading ', data.length)
+    return false
+  } else {
+    console.log('DONE ', data.length)
+    return true
+  }
+
+}
+
+function evaluatePage(page, attempts, ph, cb) {
+
+  setTimeout(function() {
+    attempts++
+    page.evaluate(function() {
+      return document.all[0].innerHTML;
+    }, function(data) {
+
+      if (isItLoaded(data) === true || attempts > 10) {
+        cb(data)
+        ph.exit();
+      } else {
+        evaluatePage(page, attempts, ph, cb)
+      }
+
+    });
+  }, 250);
 }
 
 function getNonAuth(req, res) {
@@ -141,3 +174,7 @@ function rtrim(str, chr) {
   var rgxtrim = (!chr) ? new RegExp('\\s+$') : new RegExp(chr + '+$');
   return str.replace(rgxtrim, '');
 }
+
+String.prototype.contains = function(it) {
+  return this.indexOf(it) != -1;
+};
