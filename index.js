@@ -124,8 +124,8 @@ function evaluatePage(page, attempts, ph, cb) {
 }
 
 function cleanHtml(data) {
-  //data = data.replace('/js/app/init/main.min.js', '/js/app/config/config.js')
-  //data = data.replace("https://ssl.google-analytics.com/ga.js", '/js/app/config/config.js', '')
+  data = data.replace('/js/app/init/main.min.js', '/js/app/config/config.js')
+    //data = data.replace("https://ssl.google-analytics.com/ga.js", '/js/app/config/config.js', '')
   return data
 
 }
