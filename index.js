@@ -17,25 +17,18 @@ server.use(function(req, res, next) {
 server.enable('trust proxy');
 
 server.get('/api/*', function(req, res) {
-
-  getNonAuth(req, res)
+  getNonAuth(req, res);
 });
 
 server.get('/css/*', redirectStaticFile);
-//server.get('/js/*', redirectStaticFile);
-server.get('/js/*', function(req, res) {
-  res.status(200).send('')
-});
+server.get('/js/*', redirectStaticFile);
 server.get('/img/*', redirectStaticFile);
+server.get('/fonts/*', sendBlank);
 server.get('/favicon.ico', redirectStaticFile);
 
 server.get('/*', function(req, res) {
-  //console.log(req.path)
-
   getSource(req.path, function(data) {
-
     res.status(200).send(data);
-
   })
 });
 
@@ -49,11 +42,16 @@ function redirectStaticFile(req, res) {
   res.redirect(rootUrl + req.path)
 }
 
+function sendBlank(req, res) {
+  res.status(200).send('')
+}
+
 function getSource(url, cb) {
   url = url.replace('//', '/')
   url = rtrim(url, '/')
 
-  var fullUrl = rootUrl + url + '?reqAsBot'
+  // var fullUrl = rootUrl + url + '?reqAsBot'
+  var fullUrl = rootUrl + url
 
   phantom.create("--web-security=false", "--ignore-ssl-errors=true", "--load-images=false", '--ssl-protocol=any', '--disk-cache=true', function(ph) {
 
@@ -80,7 +78,7 @@ function getSource(url, cb) {
               cb(data)
               ph.exit();
             });
-          }, 1500)
+          }, 3000)
         }
 
       });
