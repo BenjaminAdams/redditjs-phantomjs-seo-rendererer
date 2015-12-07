@@ -49,6 +49,8 @@ function getSource(url, cb) {
   url = url.replace('//', '/')
   url = rtrim(url, '/')
 
+  var fullUrl = rootUrl + url + '?reqAsBot'
+
   phantom.create("--web-security=false", "--ignore-ssl-errors=true", "--load-images=false", '--ssl-protocol=any', function(ph) {
 
     ph.createPage(function(page) {
@@ -58,23 +60,23 @@ function getSource(url, cb) {
       //   console.log('ERROR:', resourceError)
       // })
 
-      console.log(rootUrl + url + '?reqAsBot')
-      page.open(rootUrl + url + '?reqAsBot', function(status) {
+      console.log(fullUrl)
+      page.open(fullUrl, function(status) {
         console.log("opened page= ", status);
 
         if (status === 'fail') {
-          return cb('failed to load url:' + url)
+          cb('failed to load url:' + url)
+        } else {
+          setTimeout(function() {
+            page.evaluate(function() {
+              return document.all[0].innerHTML;
+
+            }, function(data) {
+              cb(data)
+              ph.exit();
+            });
+          }, 400)
         }
-
-        setTimeout(function() {
-          page.evaluate(function() {
-            return document.all[0].innerHTML;
-
-          }, function(data) {
-            cb(data)
-            ph.exit();
-          });
-        }, 400)
 
       });
 
