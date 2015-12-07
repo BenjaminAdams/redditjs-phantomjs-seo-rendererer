@@ -4,8 +4,8 @@
   "description": "Use Phantomjs to render the content of redditJS",
   "main": "./index",
   "engines": {
-    "node": "4.0.0",
-    "npm": "2.14.x"
+    "node": "5.1.x",
+    "npm": "3.3.x"
   },
   "dependencies": {
     "body-parser": "^1.0.0",

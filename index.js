@@ -75,7 +75,7 @@ function getSource(url, cb) {
               cb(data)
               ph.exit();
             });
-          }, 400)
+          }, 1000)
         }
 
       });
