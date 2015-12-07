@@ -22,7 +22,7 @@ server.get('/api/*', function(req, res) {
 });
 
 server.get('/css/*', redirectStaticFile);
-server.get('/js/*', sendBlank);
+server.get('/js/*', redirectStaticFile);
 server.get('/img/*', redirectStaticFile);
 server.get('/fonts/*', sendBlank);
 server.get('/favicon.ico', redirectStaticFile);
@@ -53,15 +53,15 @@ function getSource(url, cb) {
 
   var attempts = 0;
 
-  var fullUrl = rootUrl + url
+  var fullUrl = rootUrl + url + '?reqAsBot=1'
 
   phantom.create("--web-security=false", "--ignore-ssl-errors=true", "--load-images=false", '--ssl-protocol=any', '--disk-cache=true', function(ph) {
 
     ph.createPage(function(page) {
 
       // page.set('onResourceError', function(resourceError) {
-      //   console.log('ERROR:', resourceError)
-      // })
+      //  console.log('ERROR:', resourceError)
+      //})
 
       console.log('loading: ', fullUrl)
       page.open(fullUrl, function(status) {
@@ -124,7 +124,8 @@ function evaluatePage(page, attempts, ph, cb) {
 }
 
 function cleanHtml(data) {
-  data = data.replace('/js/app/init/main.min.js', '/js/app/config/config.js')
+  //data = data.replace('/js/app/init/main.min.js', '/js/app/config/config.js')
+  //data = data.replace("https://ssl.google-analytics.com/ga.js", '/js/app/config/config.js', '')
   return data
 
 }
